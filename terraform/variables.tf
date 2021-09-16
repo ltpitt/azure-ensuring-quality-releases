@@ -1,8 +1,16 @@
 # Azure GUIDS
-variable "subscription_id" {}
-variable "client_id" {}
-variable "client_secret" {}
-variable "tenant_id" {}
+variable "subscription_id" {
+  sensitive   = true
+}
+variable "client_id" {
+  sensitive   = true
+}
+variable "client_secret" {
+  sensitive   = true
+}
+variable "tenant_id" {
+  sensitive   = true
+}
 
 # Resource Group/Location
 variable "location" {}
@@ -21,6 +29,12 @@ variable "key" {}
 variable "access_key" {}
 
 # VM
-variable "admin_username" {}
-variable "packer_image" {}
-variable "public_key_path" {}
+variable "admin_username" {
+  sensitive   = true
+}
+variable "packer_image" {
+  sensitive   = true
+}
+variable "public_key_path" {
+  sensitive   = true
+}
