@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # Terraform secrets
-terraform/terraform.tfvars
+/terraform/terraform.tvars
