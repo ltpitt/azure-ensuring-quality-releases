@@ -13,10 +13,10 @@ terraform {
     }
   }
   backend "azurerm" {
-    storage_account_name = "tfstate18059"
+    storage_account_name = "tstate18412"
     container_name       = "tstate"
     key                  = "terraform.tfstate"
-    access_key           = "02oQd548NW4YvN9+YO1pirzH7i1QOXubNsDNQN0hVMzpFiwf0NCk4vPqzFxmmOWc/OVdB6WGo7DDvvrxyT2RcA=="
+    access_key           = "WKpXE8LlRYfJXAfJTUg9hxLps37r3UmN1XU0P5zkzXRTaPJIkcozC7Rmvz4oe4VJqCfJqxBiVxTa1XSHwfEXEg=="
   }
 }
 module "resource_group" {

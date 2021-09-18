@@ -1,3 +1,3 @@
 #!/bin/bash
 az group delete -n myPackerImage
-az group delete -n tfstate
+az group delete -n tstate
