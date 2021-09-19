@@ -38,7 +38,7 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription: 'azure-ensure-quality-releases-sc'
-              appName: 'azure-ensure-quality-releases-rc'
+              appName: 'azure-ensure-quality-releases-rg'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   # - deployment: VMDeploy
