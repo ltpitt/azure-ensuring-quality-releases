@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@ltpitt 
-zhulingchen
-/
-Azure-Cloud-DevOps-Ensuring-Quality-Releases
-Public
-1
-05
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Azure-Cloud-DevOps-Ensuring-Quality-Releases/azure-pipelines.yaml
-@zhulingchen
-zhulingchen need to have task InstallSSHKey@0 for stage Destroy
-Latest commit 5cb681d on 4 Jan
- History
- 1 contributor
-362 lines (340 sloc)  12.8 KB
-   
 trigger:
   branches:
     include:
@@ -62,6 +32,7 @@ stages:
     - bash: |
         cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test
       displayName: Copy terraform.tfvars
+
     - bash: |
         echo Pipeline workspace dir is $(Pipeline.Workspace)
         echo Terraform variable definition file is $(tfvardef.secureFilePath)
@@ -78,6 +49,7 @@ stages:
         pwd
         ls -la
       displayName: Verify build environment (pre)
+
     # install Terraform Azure Pipelines Extension by Microsoft DevLabs
     # https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks
     - task: TerraformInstaller@0
@@ -200,6 +172,7 @@ stages:
               AZURE_LOG_ANALYTICS_ID: $(AZURE_LOG_ANALYTICS_ID)
               AZURE_LOG_ANALYTICS_PRIMARY_KEY: $(AZURE_LOG_ANALYTICS_PRIMARY_KEY)
             displayName: Configure selenium
+
 - stage: Test
   jobs:
   - deployment: test_vm
@@ -358,6 +331,7 @@ stages:
     - bash: |
         cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test
       displayName: Copy terraform.tfvars
+
     # install Terraform Azure Pipelines Extension by Microsoft DevLabs
     # https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks
     - task: TerraformInstaller@0
@@ -386,16 +360,3 @@ stages:
           -auto-approve 
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         environmentServiceNameAzureRM: 'azurerm-sc'
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete
