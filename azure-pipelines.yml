@@ -16,6 +16,6 @@ stages:
     steps:
     - task: DownloadSecureFile@1
       name: DownloadTerraformTfvars
-      displayName: Download terraform.tfvars
+      displayName: Download terraform.tvars
       inputs:
-        secureFile: 'terraform.tfvars' 
+        secureFile: 'terraform.tvars' 
