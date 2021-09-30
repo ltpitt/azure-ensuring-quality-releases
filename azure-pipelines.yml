@@ -15,7 +15,7 @@ stages:
       vmImage: 'ubuntu-18.04'
     steps:
     - task: DownloadSecureFile@1
-      name: tfvardef
+      name: DownloadTerraformTfvars
       displayName: Download terraform.tfvars
       inputs:
         secureFile: 'terraform.tfvars' 
