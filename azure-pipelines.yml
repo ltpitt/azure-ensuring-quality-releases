@@ -29,7 +29,7 @@ stages:
        artifact: drop-fakerestapi
 - stage:
   jobs:
-  - deployment: 'Deploy FakeRestAPI'
+  - deployment: DeployFakeRestAPI
     pool:
       vmImage: 'Ubuntu-16.04'
     environment: 'TEST'
