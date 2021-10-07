@@ -1,77 +1,65 @@
-trigger:
-  branches:
-    include:
-    - main
-  paths:
-    exclude:
-    - README.md
-
+name: Azure Pipelines
+variables:
+  python.version: '3.7.6'
 stages:
-- stage: Provision
+- stage: Build
   jobs:
-  - job: provision_azure_infrastructure
-    displayName: Provision Azure Infrastructure
+  - job: Build
     pool:
-      vmImage: 'ubuntu-18.04'
+      name: Hosted Ubuntu 1604
     steps:
-    - task: DownloadSecureFile@1
-      name: DownloadTerraformTfvars
-      displayName: Download terraform.tvars
-      inputs:
-        secureFile: 'terraform.tvars' 
     # Needed for Terraform VM deployment
-    - task: InstallSSHKey@0
+    # - task: InstallSSHKey@0
+    #   inputs:
+    #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
+    #     sshPublicKey: 'PUBLIC_KEY'
+    #     sshKeySecureFile: 'id_rsa'
+    - task: ArchiveFiles@2
+      displayName: 'Archive FakeRestAPI'
       inputs:
-        knownHostsEntry: 'known_hosts'
-        sshPublicKey: $(PUBLIC_KEY)
-        sshKeySecureFile: 'udacity_azure'
-
-    - bash: |
-        cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test
-      displayName: Copy terraform.tfvars
-
-    - bash: |
-        echo Pipeline workspace dir is $(Pipeline.Workspace)
-        echo Terraform variable definition file is $(tfvardef.secureFilePath)
-        cd $(Agent.TempDirectory)
-        pwd
-        ls -la
-        cat udacity_azure.pub
-        cd ~/.ssh/
-        pwd
-        ls -la
-        cat known_hosts
-        # $(System.DefaultWorkingDirectory) is equivalent to $(Build.SourcesDirectory)
-        cd $(System.DefaultWorkingDirectory)  
-        pwd
-        ls -la
-      displayName: Verify build environment (pre)
-
-    # install Terraform Azure Pipelines Extension by Microsoft DevLabs
-    # https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks
-    - task: TerraformInstaller@0
-      displayName: Install Terraform
-      inputs:
-        terraformVersion: '0.13.5'
-
-    - task: TerraformTaskV1@0
-      displayName: Terraform Init
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        backendServiceArm: 'azurerm-sc'
-        backendAzureRmResourceGroupName: 'tstate'
-        backendAzureRmStorageAccountName: 'tstate12785'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'terraform.tfstate'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-
-    - task: TerraformTaskV1@0
-      displayName: Terraform Apply
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        commandOptions: |
-          -auto-approve 
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-        environmentServiceNameAzureRM: 'azurerm-sc'
+        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+      displayName: 'Upload Package'
+      artifact: drop-fakerestapi
+- stage:
+  jobs:
+  - deployment: FakeRestAPI
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    environment: 'TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
+            inputs:
+              azureSubscription: 'azure-ensuring-quality-releases-sc'
+              appName: 'azure-ensuring-quality-releases-as'
+              appType: webApp
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+  # - deployment: VMDeploy
+  #   displayName: NAME
+  #   environment:
+  #     name:  ENVIRONMENT NAME
+  #     resourceType: VirtualMachine
+  #     tags: TAG NAME
+  #   strategy:
+  #     runOnce:
+  #       deploy:
+  #         steps:
+  #         - task: Bash@3
+  #           inputs:
+  #             targetType: 'inline'
+  #             script: |
+  #               #! /bin/bash
+                
+  #               sudo apt-get upgrade -y
+  #               sudo apt-get install python3-pip -y
+  #               sudo apt-get install unzip -y
+  #               sudo apt-get install -y chromium-browser
+  #               pip3 install selenium
+  #               export PATH=$PATH:some/path
