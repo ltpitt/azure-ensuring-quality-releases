@@ -82,7 +82,7 @@ stages:
         command: 'init'
         backendServiceArm: 'my-subscription(0f960931-a876-48d6-a2a6-895b88229aa6)'
         backendAzureRmResourceGroupName: 'tstate'
-        backendAzureRmStorageAccountName: 'tstate18412'
+        backendAzureRmStorageAccountName: 'tstate12016'
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
         workingDirectory: './terraform'
