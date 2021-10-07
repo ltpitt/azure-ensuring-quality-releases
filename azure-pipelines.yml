@@ -27,6 +27,7 @@ stages:
      - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
        displayName: 'Upload Package'
        artifact: drop-fakerestapi
+
 - stage:
   jobs:
   - deployment: DeployFakeRestAPI
@@ -65,3 +66,13 @@ stages:
                  sudo apt-get install -y chromium-browser
                  pip3 install selenium
                  export PATH=$PATH:some/path
+
+
+  - job: buildResourcesUsingTerraform
+    displayName: 'Build resources using terraform'
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: '0.12.3'
