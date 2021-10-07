@@ -29,7 +29,7 @@ stages:
        artifact: drop-fakerestapi
 - stage:
   jobs:
-  - deployment: FakeRestAPI
+  - deployment: 'Deploy FakeRestAPI'
     pool:
       vmImage: 'Ubuntu-16.04'
     environment: 'TEST'
@@ -45,7 +45,7 @@ stages:
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
-    displayName: NAME
+    displayName: 'VMDeploy'
     environment:
       name: 'TEST'
       #resourceType: VirtualMachine
