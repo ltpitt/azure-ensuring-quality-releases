@@ -48,7 +48,7 @@ stages:
     displayName: NAME
     environment:
       name: 'TEST'
-      resourceType: VirtualMachine
+      #resourceType: VirtualMachine
     strategy:
       runOnce:
         deploy:
