@@ -98,7 +98,7 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'AZServiceConnection'
+        environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
     
     - task: TerraformTaskV1@0
       displayName: Terraform Plan
@@ -111,7 +111,7 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'AZServiceConnection'
+        environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
     
     - task: TerraformTaskV1@0
       displayName: Terraform Apply
@@ -126,4 +126,4 @@ stages:
         commandOptions: |
           -auto-approve
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'AZServiceConnection'
+        environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
