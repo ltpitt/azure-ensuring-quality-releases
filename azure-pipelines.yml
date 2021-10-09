@@ -80,7 +80,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        backendServiceArm: 'my-subscription(0f960931-a876-48d6-a2a6-895b88229aa6)'
+        backendServiceArm: 'azure-ensuring-quality-releases-sc'
         backendAzureRmResourceGroupName: 'tstate'
         backendAzureRmStorageAccountName: 'tstate12016'
         backendAzureRmContainerName: 'tstate'
