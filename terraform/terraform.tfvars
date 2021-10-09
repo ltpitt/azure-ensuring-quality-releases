@@ -6,7 +6,7 @@ tenant_id = "caeeee4e-6bd1-4467-a946-cd132bbe4499"
 
 # Resource Group/Location
 location = "eastus"
-resource_group = "azure-ensuring-quality-releases-rg"
+resource_group = "azure-ensuring-quality-releases-rg-tf"
 application_type = "web"
 
 # Network
