@@ -171,5 +171,5 @@ stages:
                 pip3 install selenium
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 777 /var/log/selenium
-                sudo python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
+                sudo python3 $(Pipeline.Workspace)/automatedtesting/selenium/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
                 sudo touch /var/log/selenium/selenium.log
