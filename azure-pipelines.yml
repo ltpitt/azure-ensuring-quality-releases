@@ -125,12 +125,20 @@ stages:
   displayName: 'Post-Deployment'
   jobs:
   - job: runNewman
-    displayName: 'Run Newman/Postman data validation tests'
+    displayName: 'Run Newman/Postman data validation tests'    
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: Npm@1
+      inputs:
+        command: 'install'
+        workingDir: 'newman -g'
+    - task: Npm@1
+      inputs:
+        command: 'install'
+        workingDir: 'newman-reporter-junitfull -g'
     - script: |
-        newman run -e automatedtesting/postman/postman-vars.json automatedtesting/postman/postman.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/postman.xml
+        newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/postman.xml
         echo Newman tests run
       displayName: 'Run Newman/Postman'
     - task: PublishTestResults@2
