@@ -47,10 +47,9 @@ stages:
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
-    displayName: 'VMDeploy'
-    environment:
-      name: 'TEST'
-      #resourceType: VirtualMachine
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'TEST'
     strategy:
       runOnce:
         deploy:
