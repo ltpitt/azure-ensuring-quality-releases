@@ -28,7 +28,7 @@ stages:
        displayName: 'Upload Package'
        artifact: drop-fakerestapi
 
-- stage:
+- stage: Deploy
   jobs:
   - deployment: DeployFakeRestAPI
     pool:
