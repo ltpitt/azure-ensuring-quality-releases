@@ -126,6 +126,8 @@ stages:
   jobs:
   - job: runNewman
     displayName: 'Run Newman/Postman data validation tests'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - script: |
         newman run -e automatedtesting/postman/postman-vars.json automatedtesting/postman/postman.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/postman.xml
@@ -138,6 +140,8 @@ stages:
     
   - job: publishSelenium
     displayName: 'Publish Selenium'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
