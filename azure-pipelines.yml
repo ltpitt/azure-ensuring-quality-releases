@@ -6,10 +6,8 @@ stages:
   jobs:
   - job: Build
     pool:
-      #name: default
       vmImage: ubuntu-latest
     steps:
-    # Needed for Terraform VM deployment
      - task: InstallSSHKey@0
        inputs:
          knownHostsEntry: '|1|zYokx+y/BPFxX2CFvVro+RmlIJk=|ZdDouKOVVUSPEBmnpUQX63+acow= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAM+7DnTNity+2WhBLgWNc5ARLYRZVSWwmNTBCr3eF+KaWZSldtMLEkYrDY2kANtmQi1GUBki/2LPa7MQlvpSgw=
@@ -66,12 +64,10 @@ stages:
                  sudo apt-get install -y chromium-browser
                  pip3 install selenium
                  export PATH=$PATH:some/path
-
-
   - job: buildResourcesUsingTerraform
     displayName: 'Build resources using terraform'
     pool:
-      vmImage: windows-latest
+      vmImage: ubuntu-latest
     steps:
     - task: TerraformInstaller@0
       inputs:
@@ -86,7 +82,6 @@ stages:
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-
     - task: TerraformTaskV1@0
       displayName: Terraform Validate
       inputs:
@@ -99,7 +94,6 @@ stages:
         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
-    
     - task: TerraformTaskV1@0
       displayName: Terraform Plan
       inputs:
@@ -112,7 +106,6 @@ stages:
         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
-    
     - task: TerraformTaskV1@0
       displayName: Terraform Apply
       inputs:
@@ -128,8 +121,8 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
 
-- stage: Postman
-  displayName: 'Postman'
+- stage: postDeployment
+  displayName: 'Post-Deployment'
   jobs:
   - job: runNewman
     displayName: 'Run Newman/Postman data validation tests'
@@ -142,3 +135,37 @@ stages:
       inputs:
         testResultsFormat: 'Junit'
         testResultsFiles: '$(Build.SourcesDirectory)/automatedtesting/postman/*.xml'
+    
+  - job: publishSelenium
+    displayName: 'Publish Selenium'
+    steps:
+    - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
+      artifact: seleniumFile
+  - deployment: seleniumOnVMDeploy
+    displayName: 'Install and run Selenium on VM'
+    dependsOn: publishSelenium
+    environment:
+      name:  '$(azureenvironment)'
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: seleniumFile
+          - task: Bash@3
+            displayName: 'Run Selenium functional tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                #!/bin/bash             
+                sudo apt-get update -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                sudo apt-get install -y chromium-chromedriver
+                pip3 install selenium
+                sudo mkdir -p /var/log/selenium
+                sudo chmod 777 /var/log/selenium
+                sudo python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
+                sudo touch /var/log/selenium/selenium.log
