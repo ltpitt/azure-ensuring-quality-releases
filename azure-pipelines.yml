@@ -127,3 +127,18 @@ stages:
           -auto-approve
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
+
+- stage: Postman
+  displayName: 'Postman'
+  jobs:
+  - job: runNewman
+    displayName: 'Run Newman/Postman data validation tests'
+    steps:
+    - script: |
+        newman run -e automatedtesting/postman/postman-vars.json automatedtesting/postman/postman.json --reporters cli,junit --reporter-junit-export $(Build.SourcesDirectory)/automatedtesting/postman/postman.xml
+        echo Newman tests run
+      displayName: 'Run Newman/Postman'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'Junit'
+        testResultsFiles: '$(Build.SourcesDirectory)/automatedtesting/postman/*.xml'
