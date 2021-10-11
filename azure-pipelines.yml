@@ -6,7 +6,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      vmImage: 'ubuntu-latest'
+      name: default
     steps:
     # Needed for Terraform VM deployment
      - task: InstallSSHKey@0
