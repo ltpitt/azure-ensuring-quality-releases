@@ -150,7 +150,6 @@ stages:
     dependsOn: publishSelenium
     environment:
       name:  '$(azureenvironment)'
-      resourceType: VirtualMachine
     strategy:
       runOnce:
         deploy:
