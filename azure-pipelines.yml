@@ -147,8 +147,7 @@ stages:
     displayName: 'Install and run Selenium on VM'
     dependsOn: publishSelenium
     environment:
-      name:  '$(azureenvironment)'
-      resourceType: VirtualMachine
+      name:  'TEST'
     strategy:
       runOnce:
         deploy:
