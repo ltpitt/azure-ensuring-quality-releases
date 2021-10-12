@@ -121,22 +121,22 @@ stages:
 #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 #         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
 
-# - stage: postDeployment
-#   displayName: 'Post-Deployment'
-#   jobs:
-#   - job: runNewman
-#     displayName: 'Run Newman/Postman data validation tests'    
-#     pool:
-#       vmImage: 'ubuntu-latest'
-#     steps:
-#     - task: Bash@3
-#       inputs:
-#         targetType: 'inline'
-#         script: |
-#               sudo npm install -g newman
-#               sudo npm install -g newman-reporter-junitfull
-#               newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/postman_data_validation_test.postman_collection.json" -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/udacity_postman_env.postman_environment.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
-#               displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
+- stage: postDeployment
+  displayName: 'Post-Deployment'
+  jobs:
+  - job: runNewman
+    displayName: 'Run Newman/Postman data validation tests'    
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+              sudo npm install -g newman
+              sudo npm install -g newman-reporter-junitfull
+              newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/postman_data_validation_test.postman_collection.json" -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/udacity_postman_env.postman_environment.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
+              displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
 
   - job: publishSelenium
     displayName: 'Publish Selenium'
