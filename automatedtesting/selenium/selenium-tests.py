@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-import datetime
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
@@ -12,7 +10,6 @@ def login(user, password):
     chrome_options.add_argument("--remote-debugging-port=9222")
     chrome_options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(options=chrome_options)
-    print(date() + ' Logging in...')
     driver.get('https://www.saucedemo.com/')
     driver.find_element_by_css_selector("input[id='user-name']").send_keys(user)
     driver.find_element_by_css_selector("input[id='password']").send_keys(password)
