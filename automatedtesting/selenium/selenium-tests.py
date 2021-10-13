@@ -7,11 +7,11 @@ from selenium.webdriver.common.by import By
 
 
 def login(user, password):
-    options = ChromeOptions()
-    options.add_argument("--headless")
-    options.add_argument("--remote-debugging-port=9222")
-    options.add_argument('--no-sandbox')
-    driver = webdriver.Chrome(options=options)
+    chrome_options = ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--remote-debugging-port=9222")
+    chrome_options.add_argument('--no-sandbox')
+    driver = webdriver.Chrome(options=chrome_options)
     print(date() + ' Logging in...')
     driver.get('https://www.saucedemo.com/')
     driver.find_element_by_css_selector("input[id='user-name']").send_keys(user)
