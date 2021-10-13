@@ -142,10 +142,6 @@ stages:
     displayName: 'Publish Selenium'
     pool:
       vmImage: 'ubuntu-latest'
-    strategy:
-      matrix:
-        Python38:
-          python.version: '3.8'
     steps:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
@@ -170,7 +166,7 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install -y chromium-browser
                 sudo apt-get install -y chromium-chromedriver
-                curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 python3 get-pip.py
                 #python3 -m pip install --upgrade pip setuptools wheel
                 pip3 install selenium
