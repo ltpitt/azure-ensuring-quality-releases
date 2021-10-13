@@ -161,7 +161,7 @@ stages:
               script: |
                 #!/bin/bash             
                 sudo apt-get update -y
-                sudo apt-get install chromium-browser chromium-chromedriver python3-pip -y 
+                sudo apt-get install chromium-browser chromium-chromedriver python3-pip python3-setuptools -y 
                 pip3 install selenium && echo PIP IS NOW INSTALLED
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 777 /var/log/selenium
