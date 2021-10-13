@@ -170,6 +170,7 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install -y chromium-browser
                 sudo apt-get install -y chromium-chromedriver
+                python3 -m pip install --upgrade pip setuptools wheel
                 pip3 install selenium
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 777 /var/log/selenium
