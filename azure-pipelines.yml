@@ -135,7 +135,7 @@ stages:
         script: |
               sudo npm install -g newman
               sudo npm install -g newman-reporter-junitfull
-              newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/postman_data_validation_test.postman_collection.json" -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/udacity_postman_env.postman_environment.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
+              newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/StarterAPIs.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
               displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
 
   - job: publishSelenium
