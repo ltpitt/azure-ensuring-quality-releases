@@ -140,6 +140,12 @@ stages:
 
   - job: publishSelenium
     displayName: 'Publish Selenium'
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix:
+        Python35:
+          python.version: '3.5'
     steps:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
