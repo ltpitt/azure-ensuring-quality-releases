@@ -144,8 +144,8 @@ stages:
       vmImage: 'ubuntu-latest'
     strategy:
       matrix:
-        Python35:
-          python.version: '3.5'
+        Python38:
+          python.version: '3.8'
     steps:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
