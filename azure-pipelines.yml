@@ -124,19 +124,19 @@ stages:
 - stage: postDeployment
   displayName: 'Post-Deployment'
   jobs:
-  - job: runNewman
-    displayName: 'Run Newman/Postman data validation tests'    
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-              sudo npm install -g newman
-              sudo npm install -g newman-reporter-junitfull
-              newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/StarterAPIs.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
-              displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
+  # - job: runNewman
+  #   displayName: 'Run Newman/Postman data validation tests'    
+  #   pool:
+  #     vmImage: 'ubuntu-latest'
+  #   steps:
+  #   - task: Bash@3
+  #     inputs:
+  #       targetType: 'inline'
+  #       script: |
+  #             sudo npm install -g newman
+  #             sudo npm install -g newman-reporter-junitfull
+  #             newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/StarterAPIs.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
+  #             displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
 
   - job: publishSelenium
     displayName: 'Publish Selenium'
@@ -168,8 +168,6 @@ stages:
                 #!/bin/bash             
                 sudo apt-get update -y
                 sudo apt-get install python3-pip -y
-                sudo apt-get install python3-setuptools -y
-                sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
                 sudo apt-get install -y chromium-chromedriver
                 pip3 install selenium
