@@ -140,6 +140,8 @@ stages:
 
   - job: publishSelenium
     displayName: 'Publish Selenium'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
@@ -147,7 +149,8 @@ stages:
     displayName: 'Install and run Selenium on VM'
     dependsOn: publishSelenium
     environment:
-      name:  'TEST'
+      name:  '$(azureenvironment)'
+      resourceType: VirtualMachine
     strategy:
       runOnce:
         deploy:
@@ -161,8 +164,12 @@ stages:
               script: |
                 #!/bin/bash             
                 sudo apt-get update -y
-                sudo apt-get install chromium-browser chromium-chromedriver python3-pip python3-setuptools python3-selenium -y 
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                sudo apt-get install -y chromium-chromedriver
+                pip3 install selenium
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 777 /var/log/selenium
-                sudo python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
+                sudo python3 $(Pipeline.Workspace)/automatedtesting/selenium/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
                 sudo touch /var/log/selenium/selenium.log
