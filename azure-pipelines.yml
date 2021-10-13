@@ -167,6 +167,7 @@ stages:
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
                 sudo apt-get install -y chromium-chromedriver
+                pip3 install --upgrade pip
                 pip3 install selenium
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 777 /var/log/selenium
