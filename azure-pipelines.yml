@@ -186,13 +186,13 @@ stages:
         mkdir -p log/jmeter
       displayName: Install JMeter
     - bash: |
-        apache-jmeter-5.4/bin/jmeter -n -t jmeter/stress.jmx \
+        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/stress.jmx \
                                       -l log/jmeter/stress-test-result.csv \
                                       -e -f -o log/jmeter/stress-test-html-report \
                                       -j log/jmeter/jmeter-stress-test.log
       displayName: JMeter stress test
     - bash: |
-        apache-jmeter-5.4/bin/jmeter -n -t jmeter/endurance.jmx \
+        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/endurance.jmx \
                                       -l log/jmeter/endurance-test-result.csv \
                                       -e -f -o log/jmeter/endurance-test-html-report \
                                       -j log/jmeter/jmeter-endurance-test.log
