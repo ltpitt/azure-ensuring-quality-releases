@@ -1,23 +1,23 @@
 {
 	"info": {
-		"_postman_id": "968b3a18-cc72-48a2-9b6b-e8619b4aaca8",
+		"_postman_id": "753f7b97-fa79-4a39-b32a-ac1dcd093384",
 		"name": "Starter APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Create Employee",
+			"name": "Create Author",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "38b1717c-45ae-477f-8dae-8e889ba381d5",
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"     pm.expect(pm.response.text()).to.include(pm.environment.get(\"authorFirstName\"));",
 							"});",
 							"var json = pm.response.json();",
-							"pm.environment.set(\"id\", json.data.id);"
+							"pm.environment.set(\"ID\", json.ID);",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -28,7 +28,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"raw": "{\n    \"ID\": 1,\n    \"IDBook\": 0,\n    \"FirstName\": \"{{authorFirstName}}\",\n    \"LastName\": \"{{authorLastName}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -36,29 +36,163 @@
 					}
 				},
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/create",
-					"protocol": "http",
+					"raw": "https://azure-ensuring-quality-releases-as.azurewebsites.net/api/Authors",
+					"protocol": "https",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"azure-ensuring-quality-releases-as",
+						"azurewebsites",
+						"net"
 					],
 					"path": [
 						"api",
-						"v1",
-						"create"
+						"Authors"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get All Employees",
+			"name": "Create Book",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "af3cb111-e3ac-4174-b8ca-7f4127a0285d",
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"     pm.expect(pm.response.text()).to.include(pm.environment.get(\"bookTitle\"));",
+							"});",
+							"var json = pm.response.json();",
+							"pm.environment.set(\"ID\", json.ID);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ID\": 1,\n    \"Title\": \"Book 1\",\n    \"Description\": \"Book 1 description\",\n    \"PageCount\": 1,\n    \"Excerpt\": \"Book 1 excerpt\",\n    \"PublishDate\": \"0001-01-01T00:00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://azure-ensuring-quality-releases-as.azurewebsites.net/api/Books",
+					"protocol": "https",
+					"host": [
+						"azure-ensuring-quality-releases-as",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://azure-ensuring-quality-releases-as.azurewebsites.net/api/Authors/1",
+					"protocol": "https",
+					"host": [
+						"azure-ensuring-quality-releases-as",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"Authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"updatedName\");",
+							"});",
+							"var json = pm.response.json();",
+							"pm.environment.set(\"ID\", json.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ID\": 1,\n    \"IDBook\": 0,\n    \"FirstName\": \"updatedName\",\n    \"LastName\": \"{{authorLastName}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://azure-ensuring-quality-releases-as.azurewebsites.net/api/Authors/1",
+					"protocol": "https",
+					"host": [
+						"azure-ensuring-quality-releases-as",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"Authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"success\");",
@@ -73,22 +207,21 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://dummy.restapiexample.com/api/v1/employees",
-					"protocol": "http",
+					"raw": "https://azure-ensuring-quality-releases-as.azurewebsites.net/api/Authors/1",
+					"protocol": "https",
 					"host": [
-						"dummy",
-						"restapiexample",
-						"com"
+						"azure-ensuring-quality-releases-as",
+						"azurewebsites",
+						"net"
 					],
 					"path": [
 						"api",
-						"v1",
-						"employees"
+						"Authors",
+						"1"
 					]
 				}
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
