@@ -1,0 +1,19 @@
+{
+  "id": "bb97c115-5e95-4471-9d1f-14fc52f1adee",
+  "name": "Test",
+  "values": [
+    {
+      "key": "ID",
+      "value": "",
+      "enabled": true
+    },
+    {
+      "key": "url",
+      "value": "https://azure-ensuring-quality-releases-as.azurewebsites.net/api/",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2021-10-14T22:06:19.144Z",
+  "_postman_exported_using": "Postman/7.36.6"
+}
