@@ -13,7 +13,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Successful response\", function () {",
-							"     pm.expect(pm.response.text()).to.include(pm.environment.get(\"authorFirstName\"));",
+							"     pm.expect(pm.response.text()).to.include(\"Davide\");",
 							"});",
 							"var json = pm.response.json();",
 							"pm.environment.set(\"ID\", json.ID);",
@@ -28,7 +28,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"ID\": 1,\n    \"IDBook\": 0,\n    \"FirstName\": \"{{authorFirstName}}\",\n    \"LastName\": \"{{authorLastName}}\"\n}",
+					"raw": "{\n    \"ID\": 1,\n    \"IDBook\": 0,\n    \"FirstName\": \"Davide\",\n    \"LastName\": \"Nastri\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -163,7 +163,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"ID\": 1,\n    \"IDBook\": 0,\n    \"FirstName\": \"updatedName\",\n    \"LastName\": \"{{authorLastName}}\"\n}",
+					"raw": "{\n    \"ID\": 1,\n    \"IDBook\": 0,\n    \"FirstName\": \"updatedName\",\n    \"LastName\": \"Nastri\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
