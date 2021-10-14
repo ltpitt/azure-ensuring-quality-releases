@@ -124,19 +124,19 @@ stages:
 - stage: postDeployment
   displayName: 'Post-Deployment'
   jobs:
-  # - job: runNewman
-  #   displayName: 'Run Newman/Postman data validation tests'    
-  #   pool:
-  #     vmImage: 'ubuntu-latest'
-  #   steps:
-  #   - task: Bash@3
-  #     inputs:
-  #       targetType: 'inline'
-  #       script: |
-  #             sudo npm install -g newman
-  #             sudo npm install -g newman-reporter-junitfull
-  #             newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/StarterAPIs.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
-  #             displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
+  - job: runNewman
+    displayName: 'Run Newman/Postman data validation tests'    
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+              sudo npm install -g newman
+              sudo npm install -g newman-reporter-junitfull
+              newman run "$(System.DefaultWorkingDirectory)/automatedtesting/postman/StarterAPIs.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml
+              displayName: 'Install Postman Dependencies and Run Postman Data Validation Tests'
 
   - job: publishSelenium
     displayName: 'Publish Selenium'
@@ -163,13 +163,9 @@ stages:
               script: |
                 #!/bin/bash
                 sudo apt-get update -y
-                #sudo apt-get install python3-pip -y
                 sudo apt-get install -y chromium-chromedriver chromium-browser
                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 python3 get-pip.py
                 pip3 install selenium
                 python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py
-                #sudo mkdir -p /var/log/selenium
-                #sudo chmod 777 /var/log/selenium
-                #sudo python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
-                #sudo touch /var/log/selenium/selenium.log
+
