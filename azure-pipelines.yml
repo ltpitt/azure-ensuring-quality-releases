@@ -121,51 +121,104 @@ stages:
 #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 #         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
 
-- stage: postDeployment
-  displayName: 'Post-Deployment'
+# - stage: postDeployment
+#   displayName: 'Post-Deployment'
+#   jobs:
+#   - job: runNewman
+#     displayName: 'Run Newman/Postman data validation tests'    
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     steps:
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#               sudo npm install -g newman
+#               sudo npm install -g newman-reporter-junitfull
+#               newman run -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/environment.json" "$(System.DefaultWorkingDirectory)/automatedtesting/postman/regression.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml              
+#               newman run -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/environment.json" "$(System.DefaultWorkingDirectory)/automatedtesting/postman/validation.json" -r cli,junitfull --reporter-junitfull-export result-data-regression-test.xml
+
+#   - job: publishSelenium
+#     displayName: 'Publish Selenium'
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     steps:
+#     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
+#       artifact: seleniumFile
+#   - deployment: seleniumOnVMDeploy
+#     displayName: 'Install and run Selenium on VM'
+#     dependsOn: publishSelenium
+#     environment:
+#       name:  'TEST'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - download: current
+#             artifact: seleniumFile
+#           - task: Bash@3
+#             displayName: 'Run Selenium functional tests'
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #!/bin/bash
+#                 sudo apt-get update -y
+#                 sudo apt-get install -y chromium-chromedriver chromium-browser
+#                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
+#                 python3 get-pip.py
+#                 pip3 install selenium
+#                 python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py
+
+- stage: JMeterTests
+  displayName: JMeter Tests
   jobs:
-  - job: runNewman
-    displayName: 'Run Newman/Postman data validation tests'    
+  - job: JMETERTests
+    displayName: Test JMeter
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: Bash@3
+    - bash: |
+        sudo apt-get install openjdk-11-jre-headless -y
+        java -version
+        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
+        tar xzvf jmeter.tgz
+        apache-jmeter-5.4/bin/jmeter --version
+        mkdir -p log/jmeter
+      displayName: Install JMeter
+    - bash: |
+        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/stress.jmx \
+                                      -l log/jmeter/stress-test-result.csv \
+                                      -e -f -o log/jmeter/stress-test-html-report \
+                                      -j log/jmeter/jmeter-stress-test.log
+      displayName: JMeter stress test
+    - bash: |
+        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/endurance.jmx \
+                                      -l log/jmeter/endurance-test-result.csv \
+                                      -e -f -o log/jmeter/endurance-test-html-report \
+                                      -j log/jmeter/jmeter-endurance-test.log
+      displayName: JMeter endurance test
+    - task: ArchiveFiles@2
+      displayName: Archive JMeter stress test HTML report
       inputs:
-        targetType: 'inline'
-        script: |
-              sudo npm install -g newman
-              sudo npm install -g newman-reporter-junitfull
-              newman run -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/environment.json" "$(System.DefaultWorkingDirectory)/automatedtesting/postman/regression.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml              
-              newman run -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/environment.json" "$(System.DefaultWorkingDirectory)/automatedtesting/postman/validation.json" -r cli,junitfull --reporter-junitfull-export result-data-regression-test.xml
-
-  - job: publishSelenium
-    displayName: 'Publish Selenium'
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
-      artifact: seleniumFile
-  - deployment: seleniumOnVMDeploy
-    displayName: 'Install and run Selenium on VM'
-    dependsOn: publishSelenium
-    environment:
-      name:  'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: seleniumFile
-          - task: Bash@3
-            displayName: 'Run Selenium functional tests'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #!/bin/bash
-                sudo apt-get update -y
-                sudo apt-get install -y chromium-chromedriver chromium-browser
-                curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
-                python3 get-pip.py
-                pip3 install selenium
-                python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py
-
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report-$(Build.BuildId).zip'
+        verbose: true
+    - task: ArchiveFiles@2
+      displayName: Archive JMeter endurance test HTML report
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report-$(Build.BuildId).zip'
+        verbose: true
+    - bash: |
+        rm -rf log/jmeter/stress-test-html-report
+        rm -rf log/jmeter/endurance-test-html-report
+      displayName: Delete original JMeter test HTML reports
+    - task: PublishPipelineArtifact@1
+      displayName: Publish JMeter logs
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
+        artifactName: 'drop-jmeter-logs'
