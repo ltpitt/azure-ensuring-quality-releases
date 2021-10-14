@@ -169,8 +169,6 @@ stages:
                 pip3 install selenium
                 python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py
 
-      testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
-
 - stage: JMeterTests
   displayName: JMeter Tests
   jobs:
