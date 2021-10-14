@@ -161,14 +161,13 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                #!/bin/bash             
+                #!/bin/bash
                 sudo apt-get update -y
                 sudo apt-get install python3-pip -y
                 sudo apt-get install -y chromium-browser
                 sudo apt-get install -y chromium-chromedriver
                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 python3 get-pip.py
-                #python3 -m pip install --upgrade pip setuptools wheel
                 pip3 install selenium
                 sudo mkdir -p /var/log/selenium
                 sudo chmod 777 /var/log/selenium
