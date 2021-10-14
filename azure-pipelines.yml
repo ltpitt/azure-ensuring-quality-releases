@@ -163,13 +163,13 @@ stages:
               script: |
                 #!/bin/bash
                 sudo apt-get update -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install -y chromium-browser
-                sudo apt-get install -y chromium-chromedriver
+                #sudo apt-get install python3-pip -y
+                sudo apt-get install -y chromium-chromedriver chromium-browser
                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 python3 get-pip.py
                 pip3 install selenium
-                sudo mkdir -p /var/log/selenium
-                sudo chmod 777 /var/log/selenium
-                sudo python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
-                sudo touch /var/log/selenium/selenium.log
+                python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py
+                #sudo mkdir -p /var/log/selenium
+                #sudo chmod 777 /var/log/selenium
+                #sudo python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
+                #sudo touch /var/log/selenium/selenium.log
