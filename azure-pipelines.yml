@@ -137,11 +137,10 @@ stages:
               sudo npm install -g newman-reporter-junitfull
               newman run -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/environment.json" "$(System.DefaultWorkingDirectory)/automatedtesting/postman/regression.json" -r cli,junitfull --reporter-junitfull-export result-data-validation-test.xml              
               newman run -e "$(System.DefaultWorkingDirectory)/automatedtesting/postman/environment.json" "$(System.DefaultWorkingDirectory)/automatedtesting/postman/validation.json" -r cli,junitfull --reporter-junitfull-export result-data-regression-test.xml
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/*.xml'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/*.xml'
 
   - job: publishSelenium
     displayName: 'Publish Selenium'
