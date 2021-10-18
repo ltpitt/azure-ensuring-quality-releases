@@ -174,7 +174,7 @@ stages:
                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
                 python3 get-pip.py
                 pip3 install selenium
-                python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py #2>&1 | tee -a /var/log/selenium/selenium.log
+                python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
 
 # - stage: JMeterTests
 #   displayName: JMeter Tests
