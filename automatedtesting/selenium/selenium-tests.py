@@ -2,6 +2,11 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
+import datetime
+
+
+def date ():
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def login(user, password):
@@ -17,17 +22,17 @@ def login(user, password):
 
     product_label = driver.find_element(By.XPATH, '//*[@id="header_container"]/div[2]/span').get_attribute('innerHTML')
     assert "Products" in product_label
-    print("User " + user + " logged in successfully!")
+    print(date() + " User " + user + " logged in successfully!")
     product_list = driver.find_elements_by_class_name("inventory_item")
 
     for product in product_list:
         inventory_item_text = product.find_elements_by_class_name("inventory_item_name")[0].get_attribute('innerHTML')
-        print("Object added to the cart: " + inventory_item_text)
+        print(date() + " Object added to the cart: " + inventory_item_text)
         product.find_elements_by_class_name("btn")[0].click()
 
     for product in product_list:
         inventory_item_text = product.find_elements_by_class_name("inventory_item_name")[0].get_attribute('innerHTML')
-        print("Object removed from the cart: " + inventory_item_text)
+        print(date() + " Object removed from the cart: " + inventory_item_text)
         product.find_elements_by_class_name("btn")[0].click()
 
 
