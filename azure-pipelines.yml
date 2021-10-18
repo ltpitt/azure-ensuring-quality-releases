@@ -127,7 +127,7 @@ stages:
   - job: runNewman
     displayName: 'Run Newman/Postman data validation tests'    
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-18.04'
     steps:
     - task: Bash@3
       inputs:
@@ -145,7 +145,7 @@ stages:
   - job: publishSelenium
     displayName: 'Publish Selenium'
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-18.04'
     steps:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
