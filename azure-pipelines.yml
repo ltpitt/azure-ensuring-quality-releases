@@ -2,124 +2,124 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-- stage: Build
-  jobs:
-  - job: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-     - task: InstallSSHKey@0
-       inputs:
-         knownHostsEntry: '|1|zYokx+y/BPFxX2CFvVro+RmlIJk=|ZdDouKOVVUSPEBmnpUQX63+acow= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAM+7DnTNity+2WhBLgWNc5ARLYRZVSWwmNTBCr3eF+KaWZSldtMLEkYrDY2kANtmQi1GUBki/2LPa7MQlvpSgw=
-|1|KVEQakui/56XXPyfnlNQ5wMvhUI=|zddSjv6gAAgKpb+8DuN8BwC6Cws= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-|1|PLqCz0ouwnLe6Y3Oo8lTIFy+cuc=|xzoL0vMKe6YXWw/RKf9jsbYpwSU= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-|1|UL4ITTxoCSyFGgzZzqfxrKVH7P4=|08PmvXVO/G04c/JTlp+/DaVFyes= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
-         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPvU1JlQ/at+rduPt/N01QLyjIEYXZGtr/MDWjBP/Cf0nNIKu8HVCNP1Q/vSq07G+JeO8VI8ry2uqh60SxipBXPXJCIfRxjmhA+0L8TVTbnTWKuKV2Al8eUxE3pya8mZo5Ae8G6zHP5fE+JrTKByNW4yiKmaIKW1eiGEzGzFGYsjyi7cRP0WHDXpp6cQQw/xVw9qkJIiWxBQEf21V4mSoM101MH69ptmf49pjVuVsHKJ/mnt9QoeCnf8iN7XuUnaPPHietSSAPfcm8LyE92QcngJaG4VJjbzCY55cdfV4XFy5cgOqYGdOjD7FpdIx/+IYQ0hEPaxiwouqBRdzozVCb'
-         sshKeySecureFile: 'id_rsa'
-     - task: ArchiveFiles@2
-       displayName: 'Archive FakeRestAPI'
-       inputs:
-        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-       displayName: 'Upload Package'
-       artifact: drop-fakerestapi
+# - stage: Build
+#   jobs:
+#   - job: Build
+#     pool:
+#       vmImage: ubuntu-latest
+#     steps:
+#      - task: InstallSSHKey@0
+#        inputs:
+#          knownHostsEntry: '|1|zYokx+y/BPFxX2CFvVro+RmlIJk=|ZdDouKOVVUSPEBmnpUQX63+acow= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAM+7DnTNity+2WhBLgWNc5ARLYRZVSWwmNTBCr3eF+KaWZSldtMLEkYrDY2kANtmQi1GUBki/2LPa7MQlvpSgw=
+# |1|KVEQakui/56XXPyfnlNQ5wMvhUI=|zddSjv6gAAgKpb+8DuN8BwC6Cws= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+# |1|PLqCz0ouwnLe6Y3Oo8lTIFy+cuc=|xzoL0vMKe6YXWw/RKf9jsbYpwSU= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+# |1|UL4ITTxoCSyFGgzZzqfxrKVH7P4=|08PmvXVO/G04c/JTlp+/DaVFyes= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+#          sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPvU1JlQ/at+rduPt/N01QLyjIEYXZGtr/MDWjBP/Cf0nNIKu8HVCNP1Q/vSq07G+JeO8VI8ry2uqh60SxipBXPXJCIfRxjmhA+0L8TVTbnTWKuKV2Al8eUxE3pya8mZo5Ae8G6zHP5fE+JrTKByNW4yiKmaIKW1eiGEzGzFGYsjyi7cRP0WHDXpp6cQQw/xVw9qkJIiWxBQEf21V4mSoM101MH69ptmf49pjVuVsHKJ/mnt9QoeCnf8iN7XuUnaPPHietSSAPfcm8LyE92QcngJaG4VJjbzCY55cdfV4XFy5cgOqYGdOjD7FpdIx/+IYQ0hEPaxiwouqBRdzozVCb'
+#          sshKeySecureFile: 'id_rsa'
+#      - task: ArchiveFiles@2
+#        displayName: 'Archive FakeRestAPI'
+#        inputs:
+#         rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+#      - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+#        displayName: 'Upload Package'
+#        artifact: drop-fakerestapi
 
-- stage: Deploy
-  jobs:
-  - deployment: DeployFakeRestAPI
-    pool:
-      vmImage: 'ubuntu-latest'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'azure-ensuring-quality-releases-sc'
-              appName: 'azure-ensuring-quality-releases-as'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  - deployment: VMDeploy
-    pool:
-      vmImage: 'ubuntu-latest'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-           - task: Bash@3
-             inputs:
-               targetType: 'inline'
-               script: |
-                 #! /bin/bash
+# - stage: Deploy
+#   jobs:
+#   - deployment: DeployFakeRestAPI
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     environment: 'TEST'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: AzureWebApp@1
+#             displayName: 'Deploy Azure Web App'
+#             inputs:
+#               azureSubscription: 'azure-ensuring-quality-releases-sc'
+#               appName: 'azure-ensuring-quality-releases-as'
+#               appType: webApp
+#               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+#   - deployment: VMDeploy
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     environment: 'TEST'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#            - task: Bash@3
+#              inputs:
+#                targetType: 'inline'
+#                script: |
+#                  #! /bin/bash
                 
-                 sudo apt-get upgrade -y
-                 sudo apt-get install python3-pip -y
-                 sudo apt-get install unzip -y
-                 sudo apt-get install -y chromium-browser
-                 pip3 install selenium
-                 export PATH=$PATH:some/path
-  - job: buildResourcesUsingTerraform
-    displayName: 'Build resources using terraform'
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: TerraformInstaller@0
-      inputs:
-        terraformVersion: '0.12.3'
-    - task: TerraformTaskV2@2
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        backendServiceArm: 'azure-ensuring-quality-releases-sc'
-        backendAzureRmResourceGroupName: 'tstate'
-        backendAzureRmStorageAccountName: 'tstate12016'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Validate
-      inputs:
-        provider: 'azurerm'
-        command: 'validate'
-        backendServiceArm: 'azure-ensuring-quality-releases-sc'
-        backendAzureRmResourceGroupName: 'tstate'
-        backendAzureRmStorageAccountName: 'tstate12016'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Plan
-      inputs:
-        provider: 'azurerm'
-        command: 'plan'
-        backendServiceArm: 'azure-ensuring-quality-releases-sc'
-        backendAzureRmResourceGroupName: 'tstate'
-        backendAzureRmStorageAccountName: 'tstate12016'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Apply
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        backendServiceArm: 'azure-ensuring-quality-releases-sc'
-        backendAzureRmResourceGroupName: 'tstate'
-        backendAzureRmStorageAccountName: 'tstate12016'
-        backendAzureRmContainerName: 'tstate'
-        backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
-        commandOptions: |
-          -auto-approve
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
+#                  sudo apt-get upgrade -y
+#                  sudo apt-get install python3-pip -y
+#                  sudo apt-get install unzip -y
+#                  sudo apt-get install -y chromium-browser
+#                  pip3 install selenium
+#                  export PATH=$PATH:some/path
+#   - job: buildResourcesUsingTerraform
+#     displayName: 'Build resources using terraform'
+#     pool:
+#       vmImage: ubuntu-latest
+#     steps:
+#     - task: TerraformInstaller@0
+#       inputs:
+#         terraformVersion: '0.12.3'
+#     - task: TerraformTaskV2@2
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'init'
+#         backendServiceArm: 'azure-ensuring-quality-releases-sc'
+#         backendAzureRmResourceGroupName: 'tstate'
+#         backendAzureRmStorageAccountName: 'tstate12016'
+#         backendAzureRmContainerName: 'tstate'
+#         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Validate
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'validate'
+#         backendServiceArm: 'azure-ensuring-quality-releases-sc'
+#         backendAzureRmResourceGroupName: 'tstate'
+#         backendAzureRmStorageAccountName: 'tstate12016'
+#         backendAzureRmContainerName: 'tstate'
+#         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Plan
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'plan'
+#         backendServiceArm: 'azure-ensuring-quality-releases-sc'
+#         backendAzureRmResourceGroupName: 'tstate'
+#         backendAzureRmStorageAccountName: 'tstate12016'
+#         backendAzureRmContainerName: 'tstate'
+#         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Apply
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'apply'
+#         backendServiceArm: 'azure-ensuring-quality-releases-sc'
+#         backendAzureRmResourceGroupName: 'tstate'
+#         backendAzureRmStorageAccountName: 'tstate12016'
+#         backendAzureRmContainerName: 'tstate'
+#         backendAzureRmKey: 'sURe3a+yOM1qfDovjQq/m7ZB5OTc6LmBSfEA+WeFZFuBIs2M2gN5OW98MQiDR+ENmM4W9raEnZmyclqFviXYwQ=='
+#         commandOptions: |
+#           -auto-approve
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'azure-ensuring-quality-releases-sc'
 
 - stage: postDeployment
   displayName: 'Post-Deployment'
@@ -178,56 +178,56 @@ stages:
                 pip3 install selenium
                 python3 $(Pipeline.Workspace)/seleniumFile/selenium-tests.py 2>&1 | tee -a /var/log/selenium/selenium.log
 
-- stage: JMeterTests
-  displayName: JMeter Tests
-  jobs:
-  - job: JMETERTests
-    displayName: Test JMeter
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - bash: |
-        sudo apt-get install openjdk-11-jre-headless -y
-        java -version
-        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
-        tar xzvf jmeter.tgz
-        apache-jmeter-5.4/bin/jmeter --version
-        mkdir -p log/jmeter
-      displayName: Install JMeter
-    - bash: |
-        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/stress.jmx \
-                                      -l log/jmeter/stress-test-result.csv \
-                                      -e -f -o log/jmeter/stress-test-html-report \
-                                      -j log/jmeter/jmeter-stress-test.log
-      displayName: JMeter stress test
-    - bash: |
-        apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/endurance.jmx \
-                                      -l log/jmeter/endurance-test-result.csv \
-                                      -e -f -o log/jmeter/endurance-test-html-report \
-                                      -j log/jmeter/jmeter-endurance-test.log
-      displayName: JMeter endurance test
-    - task: ArchiveFiles@2
-      displayName: Archive JMeter stress test HTML report
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report-$(Build.BuildId).zip'
-        verbose: true
-    - task: ArchiveFiles@2
-      displayName: Archive JMeter endurance test HTML report
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report-$(Build.BuildId).zip'
-        verbose: true
-    - bash: |
-        rm -rf log/jmeter/stress-test-html-report
-        rm -rf log/jmeter/endurance-test-html-report
-      displayName: Delete original JMeter test HTML reports
-    - task: PublishPipelineArtifact@1
-      displayName: Publish JMeter logs
-      inputs:
-        targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
-        artifactName: 'drop-jmeter-logs'
+# - stage: JMeterTests
+#   displayName: JMeter Tests
+#   jobs:
+#   - job: JMETERTests
+#     displayName: Test JMeter
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     steps:
+#     - bash: |
+#         sudo apt-get install openjdk-11-jre-headless -y
+#         java -version
+#         wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
+#         tar xzvf jmeter.tgz
+#         apache-jmeter-5.4/bin/jmeter --version
+#         mkdir -p log/jmeter
+#       displayName: Install JMeter
+#     - bash: |
+#         apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/stress.jmx \
+#                                       -l log/jmeter/stress-test-result.csv \
+#                                       -e -f -o log/jmeter/stress-test-html-report \
+#                                       -j log/jmeter/jmeter-stress-test.log
+#       displayName: JMeter stress test
+#     - bash: |
+#         apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/endurance.jmx \
+#                                       -l log/jmeter/endurance-test-result.csv \
+#                                       -e -f -o log/jmeter/endurance-test-html-report \
+#                                       -j log/jmeter/jmeter-endurance-test.log
+#       displayName: JMeter endurance test
+#     - task: ArchiveFiles@2
+#       displayName: Archive JMeter stress test HTML report
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stress-test-html-report-$(Build.BuildId).zip'
+#         verbose: true
+#     - task: ArchiveFiles@2
+#       displayName: Archive JMeter endurance test HTML report
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurance-test-html-report-$(Build.BuildId).zip'
+#         verbose: true
+#     - bash: |
+#         rm -rf log/jmeter/stress-test-html-report
+#         rm -rf log/jmeter/endurance-test-html-report
+#       displayName: Delete original JMeter test HTML reports
+#     - task: PublishPipelineArtifact@1
+#       displayName: Publish JMeter logs
+#       inputs:
+#         targetPath: '$(System.DefaultWorkingDirectory)/log/jmeter'
+#         artifactName: 'drop-jmeter-logs'
