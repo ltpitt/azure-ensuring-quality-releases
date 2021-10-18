@@ -6,9 +6,9 @@ from selenium.webdriver.common.by import By
 
 def login(user, password):
     options = ChromeOptions()
-    # options.add_argument("--headless")
-    # options.add_argument("--remote-debugging-port=9222")
-    # options.add_argument('--no-sandbox')
+    options.add_argument("--headless")
+    options.add_argument("--remote-debugging-port=9222")
+    options.add_argument('--no-sandbox')
     driver = webdriver.Chrome(options=options)
     driver.get('https://www.saucedemo.com/')
     driver.find_element_by_css_selector("input[id='user-name']").send_keys(user)
