@@ -170,6 +170,7 @@ stages:
                 #!/bin/bash
                 sudo mkdir -p /var/log/selenium/
                 sudo touch /var/log/selenium/selenium.log
+                sudo chmod 777 /var/log/selenium/selenium.log
                 sudo apt-get update -y
                 sudo apt-get install -y chromium-chromedriver chromium-browser
                 curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
