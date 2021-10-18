@@ -150,6 +150,8 @@ stages:
     - publish: $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-tests.py
       artifact: seleniumFile
   - deployment: seleniumOnVMDeploy
+    pool:
+      vmImage: 'ubuntu-18.04'
     displayName: 'Install and run Selenium on VM'
     dependsOn: publishSelenium
     environment:
